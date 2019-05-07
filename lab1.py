@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def find_x(l, u, b):
     L, U = l, u
     # список нулей

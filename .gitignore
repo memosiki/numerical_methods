@@ -5,3 +5,4 @@ lib64
 pyvenv.cfg
 bin/
 include
+__pycache__/
