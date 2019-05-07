@@ -1,12 +1,5 @@
 import numpy as np
 
-
-def cute_print(A):
-    for x in A:
-        print(x)
-    print()
-
-
 def find_x(l, u, b):
     L, U = l, u
     # список нулей
