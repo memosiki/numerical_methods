@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def add(A, B):
     # сумма двух матриц
     assert len(A) == len(B)
@@ -65,6 +68,7 @@ def transpose(A):
 
 def norm(A):
     # с-норма матрицы
+    # сумма элементов максимальной строки
     n = len(A)
     m = len(A[0])
     ret = 0
@@ -72,6 +76,20 @@ def norm(A):
         summ = 0
         for j in range(m):
             summ += abs(A[i][j])
+        ret = max(ret, summ)
+    return ret
+
+
+def norm1(A):
+    # норма матрицы
+    # сумма элементов максимального столбца
+    n = len(A)
+    m = len(A[0])
+    ret = 0
+    for i in range(m):
+        summ = 0
+        for j in range(n):
+            summ += abs(A[j][i])
         ret = max(ret, summ)
     return ret
 
@@ -85,3 +103,13 @@ def norm2(A):
         for j in range(m):
             summ += A[i][j] ** 2
     return summ ** 0.5
+
+
+def format(A):
+    # форматированный "красивый" вывод матрицы
+    return np.array(A)
+
+
+def copy(A):
+    # возвращает копию матрицы
+    return [x.copy() for x in A]
