@@ -43,6 +43,14 @@ def zeroes(n, m):
     return [([0.] * m).copy() for i in range(n)]
 
 
+def eye(n):
+    # возвращает квадратную единичную матрицу
+    A = zeroes(n, n)
+    for i in range(n):
+        A[i][i] = 1
+    return A
+
+
 def mul(A, B):
     # произведение двух матриц
     assert len(A[0]) == len(B)
