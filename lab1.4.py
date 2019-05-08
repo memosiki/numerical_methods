@@ -15,16 +15,17 @@ MAX_ITER = 10 ** 4  # максимальное число итераций (пр
 
 U = mc.eye(n)
 iter_count = 0
+summ = 0
 Ak = A.copy()
 while iter_count < MAX_ITER:
     iter_count += 1
     # находим максимальный по модулю недиагональный элемент
-    max_elem = Ak[0][1]
+    max_elem = abs(Ak[0][1])
     i, j = 0, 1
     for l in range(n):
         for m in range(n):
-            if l < m and max_elem < Ak[l][m]:  #
-                max_elem = Ak[l][m]
+            if l < m and max_elem < abs(Ak[l][m]):  #
+                max_elem = abs(Ak[l][m])
                 i, j = l, m
 
     # угол вращения
@@ -40,6 +41,18 @@ while iter_count < MAX_ITER:
     Ak = Uk.transpose() * Ak * Uk
     # сохраняем произведение U
     U *= Uk
+
+    # проверка условия завершения
+    summ = 0
+    for l in range(n):
+        for m in range(n):
+            if l < m:
+                summ += Ak[l][m] ** 2
+    if summ ** 0.5 < eps:
+        break
+
+print("Количество итераций :", iter_count)
+print("Точность последней итерации: ", summ ** 0.5)
 print("Найденная матрица U:\n", U)
 print("Собственные значения: ")
 for i in range(n):
