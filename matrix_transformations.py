@@ -103,13 +103,22 @@ def norm1(A):
 
 
 def norm2(A):
-    # 2-норма матрицы
+    # евклидова норма матрицы
+    # (2 - норма
     n = len(A)
     m = len(A[0])
     summ = 0
     for i in range(n):
         for j in range(m):
             summ += A[i][j] ** 2
+    return summ ** 0.5
+
+
+def vector_norm(v):
+    # возвращает евклидову норму вектора
+    summ = 0
+    for elem in v:
+        summ += elem ** 2
     return summ ** 0.5
 
 
