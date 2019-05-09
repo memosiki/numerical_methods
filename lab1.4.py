@@ -43,6 +43,7 @@ while iter_count < MAX_ITER:
     U *= Uk
 
     # проверка условия завершения
+    # корень суммы квадратов поддиагональны элементов < eps
     summ = 0
     for l in range(n):
         for m in range(n):
