@@ -4,8 +4,8 @@ import matrix_transformations as mt
 ###########
 # методы
 
-def eye(n):
-    return Matrix(mt.eye(n))
+def ident_matrix(n):
+    return Matrix(mt.ident_matrix(n))
 
 
 def zeroes(n, m):

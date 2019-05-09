@@ -43,7 +43,7 @@ def zeroes(n, m):
     return [([0.] * m).copy() for i in range(n)]
 
 
-def eye(n):
+def ident_matrix(n):
     # возвращает квадратную единичную матрицу
     A = zeroes(n, n)
     for i in range(n):

@@ -13,7 +13,7 @@ assert A == B
 
 MAX_ITER = 10 ** 4  # максимальное число итераций (предупреждение возможного бесконечного цикла)
 
-U = mc.eye(n)
+U = mc.ident_matrix(n)
 iter_count = 0
 summ = 0
 Ak = A.copy()
@@ -33,7 +33,7 @@ while iter_count < MAX_ITER:
         phi = math.pi / 4
     else:
         phi = 0.5 * math.atan(2 * Ak[i][j] / (Ak[i][i] - Ak[j][j]))
-    Uk = mc.eye(n)
+    Uk = mc.ident_matrix(n)
     Uk[i][i] = Uk[j][j] = math.cos(phi)
     Uk[j][i] = math.sin(phi)
     Uk[i][j] = -math.sin(phi)

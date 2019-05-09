@@ -23,7 +23,7 @@ A = Matrix(A)
 def QR_decomp(A):
     # возвращает R, Q разложение
     v = Matrix(rows=n, cols=1)
-    Q = mc.eye(n)
+    Q = mc.ident_matrix(n)
     Hk = Matrix(rows=n, cols=n)
     Ak = A.copy()
     for k in range(n - 1):
@@ -42,7 +42,7 @@ def QR_decomp(A):
         vt_v = v.transpose() * v
         vt_v = vt_v[0][0]
         coef = 2 / vt_v
-        Hk = mc.eye(n) - (v_vt * coef)
+        Hk = mc.ident_matrix(n) - (v_vt * coef)
         Ak = Hk * Ak
         Q *= Hk
     R = Ak
