@@ -1,17 +1,6 @@
 import matrix_transformations as mt
 
 
-###########
-# методы
-
-def ident_matrix(n):
-    return Matrix(mt.ident_matrix(n))
-
-
-def zeroes(n, m):
-    return Matrix(mt.zeroes(n, m))
-
-
 ##########
 # классы
 class Matrix(object):
@@ -29,6 +18,8 @@ class Matrix(object):
         else:
             assert isinstance(matrix, list)
             self.matrix = matrix
+        self.cols = len(self.matrix[0])
+        self.rows = len(self.matrix)
 
     def __add__(self, other):
         assert isinstance(other, Matrix)
@@ -45,8 +36,8 @@ class Matrix(object):
         else:
             # умножение матрицы на число
             assert isinstance(other, (float, int))
-            n = len(self.matrix)
-            m = len(self.matrix[0])
+            n = self.rows
+            m = self.cols
             A = zeroes(n, m)
             for i in range(n):
                 for j in range(m):
@@ -57,15 +48,55 @@ class Matrix(object):
         return str(mt.format(self.matrix))
 
     def __getitem__(self, key):
+        # Доступ к элементу
         return self.matrix[key]
 
     def __eq__(self, other):
+        # знак равенства
         if not isinstance(other, Matrix):
             return False
         return self.matrix == other.matrix
 
     def copy(self):
+        # Создание копии объекта
         return Matrix(mt.copy(self.matrix))
 
     def transpose(self):
+        # Транспонирование матрицы
         return Matrix(mt.transpose(self.matrix))
+
+    def __call__(self, *args, **kwargs):
+        # вызывает элементы матрицы как функции
+        B = Matrix(mt.zeroes(self.rows, self.cols))
+        for i in range(self.rows):
+            for j in range(self.cols):
+                B[i][j] = self.matrix[i][j](*args, **kwargs)
+        return B
+
+
+###########
+# методы
+
+def ident_matrix(n: int) -> Matrix:
+    # возвращает квадратную единичную матрицу
+    A = zeroes(n, n)
+    for i in range(n):
+        A[i][i] = 1
+    return A
+
+
+def zeroes(n: int, m: int) -> Matrix:
+    # нулевая матрица n*m
+    return Matrix([([0.] * m).copy() for i in range(n)])
+
+
+def norm2(A: Matrix) -> float:
+    # евклидова норма матрицы
+    # (2 - норма)
+    n = A.rows
+    m = A.cols
+    summ = 0
+    for i in range(n):
+        for j in range(m):
+            summ += A[i][j] ** 2
+    return summ ** 0.5
