@@ -14,7 +14,7 @@ def g(x, y, z):
     return 4 * x * z - (4 * x ** 2 - 2) * y
 
 
-def euler(x0, x_max, y0, z0, h, n):
+def euler(x0, y0, z0, h, n):
     x, y, z = [x0], [y0], [z0]
     for k in range(n - 1):
         y.append(y[k] + h * f(x[k], y[k], z[k]))
@@ -23,7 +23,7 @@ def euler(x0, x_max, y0, z0, h, n):
     return x, y, z
 
 
-def adams(x_max, h, n, x, y, z):
+def adams(h, n, x, y, z):
     # метод Адамса
     # https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4_%D0%90%D0%B4%D0%B0%D0%BC%D1%81%D0%B0
     for k in range(3, n - 1):
@@ -41,8 +41,18 @@ def adams(x_max, h, n, x, y, z):
     return x, y, z
 
 
-def runge_kutt(x0, x_max, y0, z0, h, n, p, a, b, c):
+def runge_kutt(x0, y0, z0, f, g, h, n):
     # Метод Рунге-Кутта произвольного порядка для системы двух ДУ
+    p = 4
+    a = [0, 1 / 2, 1 / 2, 1]
+    c = [1 / 6, 1 / 3, 1 / 3, 1 / 6]
+    b = [
+        [],
+        [1 / 2, ],
+        [0, 1 / 2],
+        [0, 0, 1 / 2],
+    ]
+
     x, y, z = [x0], [y0], [z0]
     fault = [0.]  # погрешность
     K = [0.] * p
@@ -83,23 +93,7 @@ def runge_kutt(x0, x_max, y0, z0, h, n, p, a, b, c):
     return x, y, z, fault
 
 
-h = float(input())
-x_min, x_max = 0., 1.
-y = [1]
-z = [1]
-n = int(math.ceil((x_max - x_min) / h) + 1)
-p = 4
-a = [0, 1 / 2, 1 / 2, 1]
-c = [1 / 6, 1 / 3, 1 / 3, 1 / 6]
-b = [
-    [],
-    [1 / 2, ],
-    [0, 1 / 2],
-    [0, 0, 1 / 2],
-]
-
-
-def print_res(method, x, y, z, fault, exact):
+def print_res(method, x, y, z, fault, exact, n):
     print(method)
     print("x", end=' ')
     for point in x:
@@ -128,15 +122,26 @@ def print_res(method, x, y, z, fault, exact):
     print()
 
 
-method = "Решение методом Эйлера:"
-x, y, z = euler(x_min, x_max, y[0], z[0], h, n)
-print_res(method, x, y, z, [], exact)
+def main():
+    h = float(input())
+    x_min, x_max = 0., 1.
+    y = [1]
+    z = [1]
+    n = int(math.ceil((x_max - x_min) / h) + 1)
 
-method = "Решение методом Рунге-Кутты:"
-x, y, z, fault = runge_kutt(x_min, x_max, y[0], z[0], h, n, p, a, b, c)
-print_res(method, x, y, z, fault, exact)
+    method = "Решение методом Эйлера:"
+    x, y, z = euler(x_min, y[0], z[0], h, n)
+    print_res(method, x, y, z, [], exact, n)
 
-x, y, z = adams(x_max, h, n, x[:4], y[:4], z[:4])
+    method = "Решение методом Рунге-Кутта:"
+    x, y, z, fault = runge_kutt(x_min, y[0], z[0], f, g, h, n)
+    print_res(method, x, y, z, fault, exact, n)
 
-method = "Решение методом Адамса:"
-print_res(method, x, y, z, [], exact)
+    x, y, z = adams(h, n, x[:4], y[:4], z[:4])
+
+    method = "Решение методом Адамса:"
+    print_res(method, x, y, z, [], exact, n)
+
+
+if __name__ == '__main__':
+    main()
