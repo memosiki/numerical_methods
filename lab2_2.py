@@ -54,6 +54,30 @@ def phi2_diff_x1(x1, x2):
 def phi2_diff_x2(x1, x2):
     return 0.
 
+# другой вариант системы
+def ph1(x1, x2):
+    return math.cos(x2) + 2
+
+
+def ph2(x1, x2):
+    return math.sin(x1) + 2
+
+
+def dph1_dx1(x1, x2):
+    return 0
+
+
+def dph1_dx2(x1, x2):
+    return -math.sin(x2)
+
+
+def dph2_dx1(x1, x2):
+    return math.cos(x1)
+
+
+def dph2_dx2(x1, x2):
+    return 0
+
 
 def newton_system(x0):
     x = x0.copy()
@@ -96,7 +120,7 @@ def norm(x, x_prev):
     return max(x[0] - x_prev[0], x[1] - x_prev[1])
 
 
-def simple_iter_system(x0):
+def simple_iter_system(x0, phi1, phi2, phi1_diff_x1, phi1_diff_x2, phi2_diff_x1, phi2_diff_x2):
     x1, x2 = x0[0][0], x0[1][0]
     q = max(
         abs(phi1_diff_x1(x1, x2)) + abs(phi1_diff_x2(x1, x2)),
@@ -134,6 +158,11 @@ x, iter_count = newton_system(x0)
 print("Найденное значение Методом Ньютона: \n", x)
 print("Количество итераций: ", iter_count)
 print()
-x, iter_count = simple_iter_system(x0)
-print("Метод простой итераций \n", x)
+
+print("Метод простой итерации ")
+x, iter_count = simple_iter_system(x0, phi1, phi2, phi1_diff_x1, phi1_diff_x2, phi2_diff_x1, phi2_diff_x2)
+print()
+print("Для задачи из следующего варианта")
+x, iter_count = simple_iter_system(x0, ph1, ph2, dph1_dx1, dph1_dx2, dph2_dx1, dph2_dx2)
+print("Значение х \n", x)
 print("Количество итераций: ", iter_count)
