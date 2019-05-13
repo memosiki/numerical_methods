@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+from lab1_2 import triagonal
 n = int(input())
 x = [float(num) for num in input().split(' ')]
 f = [float(num) for num in input().split(' ')]
