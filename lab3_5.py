@@ -27,10 +27,12 @@ def trapezium(h, x, f):
 
 
 def simpson(h, x, f):
+    # https://ru.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0_%D0%A1%D0%B8%D0%BC%D0%BF%D1%81%D0%BE%D0%BD%D0%B0
+    n = len(x)
     return (h / 3) * (f(x[0]) +
-                      sum(4 * f(x[i]) for i in range(1, len(x) - 1, 2)) +
-                      sum(2 * f(x[i]) for i in range(2, len(x) - 1, 2)) +
-                      f(x[len(x) - 1]))
+                      sum(4 * f(x[i]) for i in range(1, n - 1, 2)) +
+                      sum(2 * f(x[i]) for i in range(2, n - 1, 2)) +
+                      f(x[n - 1]))
 
 
 def main():
@@ -41,11 +43,6 @@ def main():
 
     val = 1.85742  # точное значение
     # https://www.wolframalpha.com/input/?i=int+1+%2F+(3+*+(x+**+2)+%2B+4+*+x+%2B+2)+from+-2+to+2
-    methods = {
-        "rectangle": rectangle,
-        "trapezium": trapezium,
-        "simpson": simpson
-    }
 
     x_h1 = arange(x0, xk, h1)
     x_h2 = arange(x0, xk, h2)
