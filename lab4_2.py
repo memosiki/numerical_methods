@@ -35,7 +35,7 @@ def shooting(xa, xb, ya, yb, h, f, g):
     eta = [1, 0.8]  # некоторое значение тангенса угла наклона касательной
     # к решению в точке a из [a,b]
 
-    eps = 0.0001
+    eps = 0.000001
     F = []
     for et in eta:
         # решаем задачу коши методом Рунге - Кутта
@@ -84,31 +84,33 @@ def finite_diff(x, za, fb, h, n):
 
 
 def main():
-    h = 0.1
+    h = 0.05
     xa, xb = 0, 1
     za = -1
     fb = 3
     n = int(math.ceil((xb - xa) / h) + 1)
-    # x, y, eta, F = shooting(xa, xb, ya, yb, h, f_1, g_1)
-    #
-    # print("Метод стрельбы")
-    # print('x       ', end='')
-    # for elem in x:
-    #     print("{:5.5f}".format(elem), end=' ')
-    # print()
-    # print('y       ', end='')
-    # for elem in y:
-    #     print("{:5.5f}".format(elem), end=' ')
-    # print()
-    # print('Погрешн.', end='')
-    # for i in range(n):
-    #     val = abs(exact(x[i]) - y[i])
-    #     print("{:5.5f}".format(val), end=' ')
-    # print()
-    # print("  эта   y({},{},эта)".format(xb, yb))
-    # for i in range(len(eta)):
-    #     print("{:+5.5f} {:5.5f}".format(eta[i], F[i] + yb))
-    # print()
+
+    ya, yb = exact(xa), exact(xb)
+    # ya, yb = 1,2
+    x, y, eta, F = shooting(xa, xb, ya, yb, h, f_1, g_1)
+    print("Метод стрельбы")
+    print('x       ', end='')
+    for elem in x:
+        print("{:5.5f}".format(elem), end=' ')
+    print()
+    print('y       ', end='')
+    for elem in y:
+        print("{:5.5f}".format(elem), end=' ')
+    print()
+    print('Погрешн.', end='')
+    for i in range(n):
+        val = abs(exact(x[i]) - y[i])
+        print("{:5.5f}".format(val), end=' ')
+    print()
+    print("  эта     f".format(xb, yb))
+    for i in range(len(eta)):
+        print("{:+5.5f} {:5.5f}".format(eta[i], F[i] + yb))
+    print()
 
     print("Конечно-разностный метод")
     x = [xa + i * h for i in range(n)]
