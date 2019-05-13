@@ -6,12 +6,6 @@ def f(x):
     return math.sin(x * math.pi / 6)
 
 
-n = int(input())
-x_list = [float(num) for num in input().split(' ')]
-x_0 = float(input())
-y = [f(x) for x in x_list]
-
-
 def lagrange(x_0, x):
     print("Многочлен Лагранжа: ")
     polynom = ""
@@ -38,8 +32,9 @@ def lagrange(x_0, x):
     return summ
 
 
-def newton(x_0, x):
-    print("Многочлен Ньютона: ")
+def newton(x_0, x, show=True):
+    if show:
+        print("Многочлен Ньютона: ")
     polynom = ""
     summ = 0
     n = len(x)
@@ -55,7 +50,7 @@ def newton(x_0, x):
         for j in range(n - i):
             if i > 0:
                 fi.append((fi_prev[j] - fi_prev[j + 1]) / \
-                          ( x[j] - x[j + i]))
+                          (x[j] - x[j + i]))
             else:
                 fi.append(f(x[j]))
         w = fi[0]
@@ -66,16 +61,27 @@ def newton(x_0, x):
             polynom += '+'
         if w != 0 and braces != ' ':
             polynom += "{:3.3f}".format(w) + braces
-    print(polynom)
+    if show:
+        print(polynom)
     return summ
 
 
-interp = lagrange(x_0, x_list)
-print("Значение полученное многочленом Лагранжа: ", interp)
-print("Точное значение: ", f(x_0))
-print("Погрешность интерполяции: ", abs(interp - f(x_0)))
-print()
-interp = newton(x_0, x_list)
-print("Значение полученное многочленом Ньютона: ", interp)
-print("Точное значение: ", f(x_0))
-print("Погрешность интерполяции: ", abs(interp - f(x_0)))
+def main():
+    n = int(input())
+    x_list = [float(num) for num in input().split(' ')]
+    x_0 = float(input())
+    y = [f(x) for x in x_list]
+
+    interp = lagrange(x_0, x_list)
+    print("Значение полученное многочленом Лагранжа: ", interp)
+    print("Точное значение: ", f(x_0))
+    print("Погрешность интерполяции: ", abs(interp - f(x_0)))
+    print()
+    interp = newton(x_0, x_list)
+    print("Значение полученное многочленом Ньютона: ", interp)
+    print("Точное значение: ", f(x_0))
+    print("Погрешность интерполяции: ", abs(interp - f(x_0)))
+
+
+if __name__ == '__main__':
+    main()

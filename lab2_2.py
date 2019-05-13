@@ -33,10 +33,10 @@ def f2_diff_x2(x1, x2):
 
 def phi1(x1, x2):
     return (math.e ** x2) - 2
-
+    # return math.log(x1-2)
 
 def phi2(x1, x2):
-    return (4 - x1 ** 2) ** 0.5
+    return x2 + ( x1 ** 2 +x2**2-4 ) /100
 
 
 def phi1_diff_x1(x1, x2):
@@ -122,14 +122,14 @@ def norm(x, x_prev):
 
 def simple_iter_system(x0, phi1, phi2, phi1_diff_x1, phi1_diff_x2, phi2_diff_x1, phi2_diff_x2):
     x1, x2 = x0[0][0], x0[1][0]
-    q = max(
-        abs(phi1_diff_x1(x1, x2)) + abs(phi1_diff_x2(x1, x2)),
-        abs(phi2_diff_x1(x1, x2)) + abs(phi2_diff_x2(x1, x2)))
-
-    if q >= 1:
-        print("В заданной области не выполняется условие сходимости итерационного процесса")
-        print('q = ', q)
-        return mc.zeroes(2, 1), 0
+    # q = max(
+    #     abs(phi1_diff_x1(x1, x2)) + abs(phi1_diff_x2(x1, x2)),
+    #     abs(phi2_diff_x1(x1, x2)) + abs(phi2_diff_x2(x1, x2)))
+    #
+    # if q >= 1:
+    #     print("В заданной области не выполняется условие сходимости итерационного процесса")
+    #     print('q = ', q)
+    #     return mc.zeroes(2, 1), 0
 
     # Матрица функций
     phi = Matrix([
@@ -161,7 +161,7 @@ print()
 
 print("Метод простой итерации ")
 x, iter_count = simple_iter_system(x0, phi1, phi2, phi1_diff_x1, phi1_diff_x2, phi2_diff_x1, phi2_diff_x2)
-print()
+print(x,iter_count)
 print("Для задачи из следующего варианта")
 x, iter_count = simple_iter_system(x0, ph1, ph2, dph1_dx1, dph1_dx2, dph2_dx1, dph2_dx2)
 print("Значение х \n", x)

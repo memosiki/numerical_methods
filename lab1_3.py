@@ -61,7 +61,7 @@ def simple_iter(A, b, eps):
 
     iter = 0
     norm = mt.norm(alpha)
-
+    print("Норма  матрицы", norm)
     pred = (log(eps) - log(mt.norm2(beta)) + log(1 - norm)) / log(norm)
     print("Верхняя оценка количества итераций: ", pred)
 

@@ -51,7 +51,7 @@ while iter_count < MAX_ITER:
                 summ += Ak[l][m] ** 2
     if summ ** 0.5 < eps:
         break
-
+print("A last", Ak)
 print("Количество итераций :", iter_count)
 print("Точность последней итерации: ", summ ** 0.5)
 print("Найденная матрица U:\n", U)

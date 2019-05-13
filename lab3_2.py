@@ -1,30 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from lab1_2 import triagonal
+from lab1_2 import tridiagonal
+
 n = int(input())
 x = [float(num) for num in input().split(' ')]
 f = [float(num) for num in input().split(' ')]
 x_0 = float(input())
-
-
-def tridiagonal(a, b, c, d):
-    n = len(d)
-
-    a = a.copy()
-    b = b.copy()
-    c = c.copy()
-    d = d.copy()
-    for i in range(1, n):
-        m = a[i - 1] / b[i - 1]
-        b[i] = b[i] - m * c[i - 1]
-        d[i] = d[i] - m * d[i - 1]
-
-    x = b.copy()
-    x[n - 1] = d[n - 1] / b[n - 1]
-
-    for i in reversed(range(0, n - 1)):
-        x[i] = (d[i] - c[i] * x[i + 1]) / b[i]
-    return x
 
 
 def cubic_spline(x, f):
@@ -38,13 +19,13 @@ def cubic_spline(x, f):
     # a - над ней
     # b - под ней
     # d - столбец свободных членов
-    a = [h(i - 1) for i in range(3, n)]
+    a = [0.] + [h(i - 1) for i in range(3, n)]
     b = [2 * (h(i - 1) + h(i)) for i in range(2, n)]
-    c = [h(i) for i in range(2, n - 1)]
+    c = [h(i) for i in range(2, n - 1)] + [0.]
     d = [3 * ((f[i] - f[i - 1]) / h(i) - ((f[i - 1] - f[i - 2]) / h(i - 1)))
          for i in range(2, n)]
 
-    C = [0, 0] + tridiagonal(a, b, c, d)
+    C = [0, 0] + tridiagonal(a, b, c, d, n - 2)
     A = [0] + [f[i] for i in range(n - 1)]
     B = [0]
     for i in range(1, n - 1):
@@ -57,6 +38,7 @@ def cubic_spline(x, f):
     for i in range(1, n):
         S.append(
             [x[i - 1], A[i], B[i], C[i], D[i]])
+
     return S
 
 
@@ -102,7 +84,7 @@ Y = [calc_spline(spline, x, val) for val in X]
 
 fig, ax = plt.subplots()
 ax.plot(X, Y, color='k')
-f[-1] += 0.03
+f[-1] += 0.04
 ax.plot(x, f, 'bo')
 
 ax.grid()

@@ -1,5 +1,5 @@
-def runge_romberg(h1, h2, y1, y2):
-    return abs((y1 - y2) / ((h2 / h1) ** 2 - 1.0))
+def runge_romberg(h1, h2, y1, y2, n=2):
+    return abs((y1 - y2) / ((h2 / h1) ** n - 1.0))
 
 
 def f(x):
@@ -52,7 +52,7 @@ def main():
     print("для h1:", first)
     print("для h2:", second)
     print("Погрешность:")
-    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second))
+    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second,1))
     print("Разница с точным реш. ", abs(first - val))
     print()
 
@@ -64,7 +64,7 @@ def main():
     print("для h1:", first)
     print("для h2:", second)
     print("Погрешность:")
-    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second))
+    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second,2))
     print("Разница с точным реш. ", abs(first - val))
     print()
 
@@ -76,7 +76,7 @@ def main():
     print("для h1:", first)
     print("для h2:", second)
     print("Погрешность:")
-    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second))
+    print("Рунге-Ромберга        ", runge_romberg(h1, h2, first, second,4))
     print("Разница с точным реш. ", abs(first - val))
     print()
 

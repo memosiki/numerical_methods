@@ -18,11 +18,9 @@ def n_degree_polynom(x, y, n):
         for k in range(len(b)):
             b[k] += y[i] * (x[i] ** k)
 
-    shift = 0
     system = []
-    for _ in range(n + 1):
+    for shift in range(n + 1):
         system.append([xpow[i + shift] for i in range(n + 1)])
-        shift += 1
 
     a = np.linalg.solve(system, b)
 
@@ -50,16 +48,16 @@ def print_func(x, f):
 
 
 def show_plot(f, x, y, step=0.1):
-    X = np.arange(x[0], x[-1]+step, step)
+    X = np.arange(x[0], x[-1] + step, step)
     Y = []
     for i in range(len(f)):
         Y.append([f[i](val) for val in X])
 
     fig, ax = plt.subplots()
     for i in range(len(Y)):
-        ax.plot(X, Y[i], label=f'степень {i+1}')
+        ax.plot(X, Y[i], label=f'степень {i + 1}')
 
-    ax.plot(x, y, 'ko', label='исходная' )
+    ax.plot(x, y, 'ko', label='исходная')
     ax.legend(loc='upper left')
 
     ax.grid()
@@ -71,7 +69,7 @@ def main():
     x = [float(num) for num in input().split(' ')]
     y = [float(num) for num in input().split(' ')]
     f = []
-    for degree in [1, 2]:
+    for degree in [0,1, 2,3,4]:
         print("Степень", degree)
         a, ft = n_degree_polynom(x, y, degree)
         f.append(ft)

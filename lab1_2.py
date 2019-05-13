@@ -1,4 +1,4 @@
-def triagonal(a, b, c, d, n):
+def tridiagonal(a, b, c, d, n):
     P = [0.] * n
     Q = [0.] * n
 
@@ -24,7 +24,7 @@ def main():
     d = [92, -84, -77, 15, -11]  # свободные члены
 
     n = 5
-    x = triagonal(a, b, c, d, n)
+    x = tridiagonal(a, b, c, d, n)
     print("Метод прогонки.")
     print("Значения х:", x)
 

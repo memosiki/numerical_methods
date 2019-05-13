@@ -1,6 +1,6 @@
 import math
 from lab4_1 import runge_kutt
-from lab1_2 import triagonal
+from lab1_2 import tridiagonal
 
 
 def exact(x):
@@ -79,12 +79,12 @@ def finite_diff(x, za, fb, h, n):
     # print('b ', b)
     # print('c ', c)
     # print('d ', d)
-    y = triagonal(a, b, c, d, n)
+    y = tridiagonal(a, b, c, d, n)
     return y
 
 
 def main():
-    h = 0.05
+    h = 0.1
     xa, xb = 0, 1
     za = -1
     fb = 3
@@ -132,3 +132,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+# TODO: Сделать в конечно разностном -- вычисление y1 yNвторым приближением
+# придётся систему решать np.linalg.solve() или вычитать из первой строки вторую чтобы обнулить один из элементов
+ 
