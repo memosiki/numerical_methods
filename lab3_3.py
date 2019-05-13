@@ -6,9 +6,7 @@ import matplotlib.pyplot as plt
 
 def n_degree_polynom(x, y, n):
     N = len(x)
-    max_pow = 0
-    for _ in range(n):
-        max_pow += 2
+    max_pow = 2 * n
 
     xpow = [N] + [0 for _ in range(max_pow)]
 
@@ -39,12 +37,12 @@ def sum_square_error(x, y, f):
         (f(x[i]) - y[i]) ** 2 for i in range(len(x)))
 
 
-def func_printer(x, f):
+def print_func(x, f):
     n = len(x)
 
     def print_line(x):
         for i in range(n):
-            print("{:7.4f}".format(x[i]), end=" | ")
+            print("{:7.4f}".format(x[i]), end="  ")
         print()
 
     print_line(x)
@@ -52,17 +50,17 @@ def func_printer(x, f):
 
 
 def show_plot(f, x, y, step=0.1):
-    X = np.arange(x[0], x[-1], step)
+    X = np.arange(x[0], x[-1]+step, step)
     Y = []
     for i in range(len(f)):
         Y.append([f[i](val) for val in X])
 
     fig, ax = plt.subplots()
     for i in range(len(Y)):
-        ax.plot(X, Y[i], label=f'degree={i}')
+        ax.plot(X, Y[i], label=f'степень {i+1}')
 
-    ax.plot(x, y, label='original')
-    ax.legend(loc='upper right')
+    ax.plot(x, y, 'ko', label='исходная' )
+    ax.legend(loc='upper left')
 
     ax.grid()
 
@@ -73,12 +71,12 @@ def main():
     x = [float(num) for num in input().split(' ')]
     y = [float(num) for num in input().split(' ')]
     f = []
-    for degree in [1, 2, 3, 4, 5, 6]:
-        print(f"degree {degree}")
+    for degree in [1, 2]:
+        print("Степень", degree)
         a, ft = n_degree_polynom(x, y, degree)
         f.append(ft)
-        func_printer(x, ft)
-        print("sum square error: {:f}\n"
+        print_func(x, ft)
+        print("Сумма квадратов ошибок: {:f}\n"
               .format(sum_square_error(x, y, ft)))
     show_plot(f, x, y)
 

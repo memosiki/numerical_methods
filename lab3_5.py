@@ -83,5 +83,6 @@ def main():
     print("Разница с точным реш. ", abs(first - val))
     print()
 
+
 if __name__ == '__main__':
     main()
