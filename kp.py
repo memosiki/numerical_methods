@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 
 
 class SparseMatrix:
@@ -53,7 +54,7 @@ def mul(A, v):
 
 def conjugate_gradient(A, b, eps=0.01):
     n = len(b)
-    max_iter = 10 ** 6
+    max_iter = 10 ** 4
 
     # проверка на симметричность
     for i in range(n):
@@ -99,19 +100,30 @@ def main(from_stdin=True):
 
         b = [1, 2]
     else:
-        A = SparseMatrix(10)
+        n = int(input())
+        A1 = np.zeros((n, n))
+        A = SparseMatrix(n)
         for line in sys.stdin:
             [i, j, val] = line.split()
+            if i == '-1':
+                break
             i, j, val = int(i), int(j), float(val)
             A[i][j] = val
-        b = [1, 1]
+            A1[i][j] = val
+        b = []
+        for line in sys.stdin:
+            b.append(float(line))
     try:
         x = conjugate_gradient(A, b)
     except ZeroDivisionError:
         print("Заданная система не совместна")
     else:
+        print("Решение методом сопряжённых градиентов")
         print(x)
+        print("Решение с помощью numpy:")
+        x = np.linalg.solve(A1, np.transpose([b]))
+        print(np.transpose(x))
 
 
 if __name__ == '__main__':
-    main(False)
+    main()
