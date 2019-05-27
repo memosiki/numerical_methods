@@ -52,7 +52,7 @@ def mul(A, v):
     return None
 
 
-def conjugate_gradient(A, b, eps=0.01):
+def conjugate_gradient(A, b, eps=0.0001):
     n = len(b)
     max_iter = 10 ** 4
 
@@ -66,23 +66,23 @@ def conjugate_gradient(A, b, eps=0.01):
     # начальное приближение
     x = [0.2] * n
     #  Задаем начальное значение r и z.
-    # r = b - A * x
+    # r = b - A * x      r - градиент
     r = sub(b, mul(A, x))
     # z = r
     z = r.copy()
     iter_count = 0
     while True:
         iter_count += 1
-        # alpha = (r,r)/(A*z,z)
+        # alpha = (r,r)/(A*z,z) скалярный шаг -- смещение по заданному направлению
         alpha = scalar_product(r, r) / scalar_product(mul(A, z), z)
         # новое приближение: x = x + alpha * z
         x = add(x, mul(alpha, z))
-        # вектор невязки: r = r - alpha * A * z
+        # градиент: r = r - alpha * A * z
         r_prev = r
         r = sub(r, mul(alpha, mul(A, z)))
-        # коэфф бета
+        # коэфф бета для нового вектора спуска
         beta = scalar_product(r, r) / scalar_product(r_prev, r_prev)
-        # вектор спуска: z = r+ beta * z-1
+        # вектор спуска  z = r+ beta * z-1
         z = add(r, mul(beta, z))
         # Поскольку минимизируемый функционал квадратичный, то процесс должен дать ответ на n-й итерации,
         # однако при реализации метода на компьютере существует погрешность представления вещественных чисел,
@@ -95,10 +95,11 @@ def conjugate_gradient(A, b, eps=0.01):
 
 def main(from_stdin=True):
     if not from_stdin:
-        A = [[4, 1],
-             [1, 3]]
-
-        b = [1, 2]
+        A = [[1, 0, 0],
+             [0, 2, 0],
+             [0, 0, 3]]
+        A1 = A
+        b = [1, 2, 3]
     else:
         n = int(input())
         A1 = np.zeros((n, n))
