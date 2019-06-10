@@ -1,6 +1,7 @@
 import numpy as np
 import matrix_transformations as mt
 
+
 def newtons_polynom(x, y, n):
     # пришлось переписывать полином, чтобы он хранил коэффициенты
     diff = mt.zeroes(n, n)
@@ -42,6 +43,7 @@ def newtons_derivative(polynom, point, order):
 
     return result
 
+
 def simple_derivative(x, y, val, order):
     n = len(x)
     k = 0
@@ -65,11 +67,11 @@ def simple_derivative(x, y, val, order):
                 (x[k + 2] - x[k])
         return first
     elif order == 2:
-            # Для вычисления второй производной, необходимо использовать
-            # интерполяционный многочлен, как минимум второй степени.
-            second = 2 * ((y[k + 2] - y[k + 1]) / (x[k + 2] - x[k + 1]) - (y[k + 1] - y[k]) / (x[k + 1] - x[k])) \
-                     / (x[k + 2] - x[k])
-            return second
+        # Для вычисления второй производной, необходимо использовать
+        # интерполяционный многочлен, как минимум второй степени.
+        second = 2 * ((y[k + 2] - y[k + 1]) / (x[k + 2] - x[k + 1]) - (y[k + 1] - y[k]) / (x[k + 1] - x[k])) \
+                 / (x[k + 2] - x[k])
+        return second
     else:
         return None
 
@@ -79,22 +81,22 @@ def main():
     y = [float(num) for num in input().split(' ')]
     point = float(input())
 
-
-    polynom = newtons_polynom(x,y,len(x))
+    polynom = newtons_polynom(x, y, len(x))
 
     # Первая производная
-    print("Первая производная")
+    print("Первая")
     res = simple_derivative(x, y, point, 1)
-    print("Приближение по 2 точкам",res)
-    res = newtons_derivative(polynom, point, 1 )
-    print("Приближение м-м Ньютона", res)
+    print("м-м 2ой степ", res)
+    res = newtons_derivative(polynom, point, 1)
+    print("м-м Ньютона", res)
     print()
-    print("Вторая производная")
-    polynom = newtons_polynom(x,y,len(x))
+    print("Вторая")
+    polynom = newtons_polynom(x, y, len(x))
     res = newtons_derivative(polynom, point, 2)
-    print("Приближение по 2 точкам",res)
+    print("м-м 2ой степ", res)
     res = simple_derivative(x, y, point, 2)
-    print("Приближение м-м Ньютона", res)
+    print("м-м Ньютона ", res)
+
 
 if __name__ == '__main__':
     main()

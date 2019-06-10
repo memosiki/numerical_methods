@@ -76,7 +76,7 @@ def finite_diff(x, za, fb, h, n, second_approx=False):
         a = [0.]
         b = [-1 / h]
         c = [1 / h]
-        d = [za]
+        d = [-1]
         for k in range(1, last):
             a += [1 - p(x[k]) * h / 2]
             b += [-2 + (h ** 2) * q(x[k])]
@@ -99,7 +99,7 @@ def finite_diff(x, za, fb, h, n, second_approx=False):
         A[0][0] = -3 / (2 * h)
         A[0][1] = 4 / (2 * h)
         A[0][2] = -1 / (2 * h)
-        d[0] = za
+        d[0] = -1
         last = n - 1
         A[last][last - 2] = 1 / (2 * h)
         A[last][last - 1] = -4 / (2 * h)
@@ -110,10 +110,10 @@ def finite_diff(x, za, fb, h, n, second_approx=False):
             A[k][k - 0] = -2 + (h ** 2) * q(x[k])
             A[k][k + 1] = 1 + p(x[k]) * h / 2
             d[k] = (h ** 2) * f(x[k])
-        L, U, perm = lab1_1.decompose_LU(A.matrix)
-        y = lab1_1.solve_LU(L, U, d, perm)
-        # y = np.linalg.solve(A.matrix, np.transpose([d]))
-        # y = np.transpose(y)[0]
+        # L, U, perm = lab1_1.decompose_LU(A.matrix)
+        # y = lab1_1.solve_LU(L, U, d, perm)
+        y = np.linalg.solve(A.matrix, np.transpose([d]))
+        y = np.transpose(y)[0]
     return y
 
 
@@ -127,6 +127,9 @@ def main():
     print("Конечно-разностный метод")
     x = [xa + i * h for i in range(n)]
     y = finite_diff(x, za, fb, h, n, second_approx=True)
+    y2 = finite_diff(x, za, fb, h, n, second_approx=False)
+
+
     print('x        ', end='')
     for elem in x:
         print("{:5.5f}".format(elem), end=' ')
@@ -134,6 +137,16 @@ def main():
     print('y        ', end='')
     for elem in y:
         print("{:5.5f}".format(elem), end=' ')
+    print()
+    # print('\ny первым ', end='')
+    # for elem in y2:
+    #     print("{:5.5f}".format(elem), end=' ')
+    # print()
+    print('Точн.реш.', end='')
+    for elem in x:
+        print("{:5.5f}".format(exact(elem)), end=' ')
+
+
     print()
     print('Погрешн. ', end='')
     for i in range(n):
@@ -145,6 +158,10 @@ def main():
     y2 = finite_diff(x2, za, fb, h / 2, n * 2)
     for i in range(n):
         print("{:5.5f}".format(runge_romberg(h, h / 2, y[i], y2[i * 2])), end=' ')
+    # print()
+    # y2 = finite_diff(x2, za, fb, h / 2, n * 2, second_approx = False)
+    # for i in range(n):
+    #     print("{:5.5f}".format(runge_romberg(h, h / 2, y[i], y2[i * 2])), end=' ')
 
     print()
     ya, yb = exact(xa), exact(xb)

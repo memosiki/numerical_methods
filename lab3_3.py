@@ -69,7 +69,7 @@ def main():
     x = [float(num) for num in input().split(' ')]
     y = [float(num) for num in input().split(' ')]
     f = []
-    for degree in [0,1, 2,3,4]:
+    for degree in [1,2]:
         print("Степень", degree)
         a, ft = n_degree_polynom(x, y, degree)
         f.append(ft)

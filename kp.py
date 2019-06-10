@@ -52,7 +52,7 @@ def mul(A, v):
     return None
 
 
-def conjugate_gradient(A, b, eps=0.0001):
+def conjugate_gradient(A, b, eps=0.01):
     n = len(b)
     max_iter = 10 ** 4
 
@@ -120,10 +120,10 @@ def main(from_stdin=True):
         print("Заданная система не совместна")
     else:
         print("Решение методом сопряжённых градиентов")
-        print(x)
-        print("Решение с помощью numpy:")
-        x = np.linalg.solve(A1, np.transpose([b]))
-        print(np.transpose(x))
+        # print(x)
+        # print("Решение с помощью numpy:")
+        # x = np.linalg.solve(A1, np.transpose([b]))
+        # print(np.transpose(x))
 
 
 if __name__ == '__main__':
