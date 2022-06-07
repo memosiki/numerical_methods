@@ -5,7 +5,7 @@ import matrix_class as mc
 n = int(input())
 eps = float(input())  # точность
 
-A = [[float(elem) for elem in input().split(' ')] for i in range(n)]
+A = [[float(elem) for elem in input().split(' ')] for _ in range(n)]
 A = Matrix(A)
 # проверка на то что матрица симметрическая
 B = A.transpose()

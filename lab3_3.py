@@ -49,10 +49,7 @@ def print_func(x, f):
 
 def show_plot(f, x, y, step=0.1):
     X = np.arange(x[0], x[-1] + step, step)
-    Y = []
-    for i in range(len(f)):
-        Y.append([f[i](val) for val in X])
-
+    Y = [[f[i](val) for val in X] for i in range(len(f))]
     fig, ax = plt.subplots()
     for i in range(len(Y)):
         ax.plot(X, Y[i], label=f'степень {i + 1}')

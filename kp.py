@@ -5,7 +5,7 @@ import numpy as np
 class SparseMatrix:
     # инициализирует нулевую квадратную матрицу размером n на n
     def __init__(self, n):
-        self.rows = [SparseRow() for i in range(n)]
+        self.rows = [SparseRow() for _ in range(n)]
 
     def __getitem__(self, key):
         return self.rows[key]
@@ -21,10 +21,7 @@ class SparseRow(dict):
 
 
 def scalar_product(a, b):
-    ret = 0
-    for elem_a, elem_b in zip(a, b):
-        ret += elem_a * elem_b
-    return ret
+    return sum(elem_a * elem_b for elem_a, elem_b in zip(a, b))
 
 
 def add(v1, v2):
@@ -39,13 +36,7 @@ def mul(A, v):
     if isinstance(A, (SparseMatrix, list)):
         # умножение матрицы на вектор
         n = len(v)
-        ret = []
-        for i in range(n):
-            sum_line = 0
-            for j in range(n):
-                sum_line += A[i][j] * v[j]
-            ret.append(sum_line)
-        return ret
+        return [sum(A[i][j] * v[j] for j in range(n)) for i in range(n)]
     elif isinstance(A, (int, float, complex)):
         # умножение числа на вектор
         return [A * elem for elem in v]
@@ -111,9 +102,7 @@ def main(from_stdin=True):
             i, j, val = int(i), int(j), float(val)
             A[i][j] = val
             A1[i][j] = val
-        b = []
-        for line in sys.stdin:
-            b.append(float(line))
+        b = [float(line) for line in sys.stdin]
     try:
         x = conjugate_gradient(A, b)
     except ZeroDivisionError:

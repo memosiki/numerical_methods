@@ -40,7 +40,7 @@ def zeroes(n):
 
 def zeroes(n, m):
     # нулевая матрица n*m
-    return [([0.] * m).copy() for i in range(n)]
+    return [([0.] * m).copy() for _ in range(n)]
 
 
 def ident_matrix(n):
@@ -60,9 +60,7 @@ def mul(A, B):
     C = zeroes(l, n)
     for i in range(l):
         for j in range(n):
-            summ = 0
-            for r in range(m):
-                summ += A[i][r] * B[r][j]
+            summ = sum(A[i][r] * B[r][j] for r in range(m))
             C[i][j] = summ
     return C
 
@@ -71,7 +69,7 @@ def transpose(A):
     # транспонирование матрицы
     height = len(A)
     width = len(A[0])
-    return [[A[row][col] for row in range(0, height)] for col in range(0, width)]
+    return [[A[row][col] for row in range(height)] for col in range(width)]
 
 
 def norm(A):
@@ -81,9 +79,7 @@ def norm(A):
     m = len(A[0])
     ret = 0
     for i in range(n):
-        summ = 0
-        for j in range(m):
-            summ += abs(A[i][j])
+        summ = sum(abs(A[i][j]) for j in range(m))
         ret = max(ret, summ)
     return ret
 
@@ -95,9 +91,7 @@ def norm1(A):
     m = len(A[0])
     ret = 0
     for i in range(m):
-        summ = 0
-        for j in range(n):
-            summ += abs(A[j][i])
+        summ = sum(abs(A[j][i]) for j in range(n))
         ret = max(ret, summ)
     return ret
 
@@ -116,9 +110,7 @@ def norm2(A):
 
 def vector_norm(v):
     # возвращает евклидову норму вектора
-    summ = 0
-    for elem in v:
-        summ += elem ** 2
+    summ = sum(elem ** 2 for elem in v)
     return summ ** 0.5
 
 

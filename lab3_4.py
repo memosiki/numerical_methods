@@ -5,7 +5,7 @@ import matrix_transformations as mt
 def newtons_polynom(x, y, n):
     # пришлось переписывать полином, чтобы он хранил коэффициенты
     diff = mt.zeroes(n, n)
-    for i in range(0, n):
+    for i in range(n):
         diff[i][i] = y[i]
         for j in range(i - 1, -1, -1):
             diff[j][i] = (diff[j + 1][i] - diff[j][i - 1])
@@ -67,11 +67,15 @@ def simple_derivative(x, y, val, order):
                 (x[k + 2] - x[k])
         return first
     elif order == 2:
-        # Для вычисления второй производной, необходимо использовать
-        # интерполяционный многочлен, как минимум второй степени.
-        second = 2 * ((y[k + 2] - y[k + 1]) / (x[k + 2] - x[k + 1]) - (y[k + 1] - y[k]) / (x[k + 1] - x[k])) \
-                 / (x[k + 2] - x[k])
-        return second
+        return (
+            2
+            * (
+                (y[k + 2] - y[k + 1]) / (x[k + 2] - x[k + 1])
+                - (y[k + 1] - y[k]) / (x[k + 1] - x[k])
+            )
+            / (x[k + 2] - x[k])
+        )
+
     else:
         return None
 

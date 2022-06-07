@@ -9,9 +9,7 @@ def find_x(l, u, b):
     # находим значения z
     # Lz = b
     for i in range(n):
-        z_sum = 0
-        for j in range(i):
-            z_sum += L[i][j] * z[j]
+        z_sum = sum(L[i][j] * z[j] for j in range(i))
         z[i] = b[i] - z_sum
 
     x = [0] * n
@@ -19,9 +17,7 @@ def find_x(l, u, b):
     # Ux = z
     for i in range(n - 1, -1, -1):
         x[i] = z[i]
-        x_sum = 0
-        for j in range(i + 1, n):
-            x_sum += U[i][j] * x[j]
+        x_sum = sum(U[i][j] * x[j] for j in range(i + 1, n))
         x[i] -= x_sum
         x[i] /= U[i][i]
     return x
@@ -52,7 +48,7 @@ L = [[0.] * n for x in range(n)]
 for k in range(n):
     L[k][k] = 1
 
-for k in range(0, n - 1):
+for k in range(n - 1):
     # находим максимальный элемент в столбце ниже k и меняем эту строку с k-той
     max_elem = U[k][k]
     max_row = k

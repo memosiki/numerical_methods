@@ -16,7 +16,7 @@ def sign(a):
 n = int(input())
 eps = float(input())  # точность
 
-A = [[float(elem) for elem in input().split(' ')] for i in range(n)]
+A = [[float(elem) for elem in input().split(' ')] for _ in range(n)]
 A = Matrix(A)
 
 
@@ -66,7 +66,7 @@ while iter_count < ITER_MAX:
     # проверка условия завершения
     # корень суммы квадратов поддиагональны элементов < eps
     summ = 0
-    for m in range(0, n):
+    for m in range(n):
         for l in range(m + 2, n):
             summ += Ak[l][m] ** 2
     if summ ** 0.5 <= eps:
