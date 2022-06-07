@@ -33,16 +33,15 @@ class Matrix(object):
         if isinstance(other, Matrix):
             # умножение матриц
             return Matrix(mt.mul(self.matrix, other.matrix))
-        else:
-            # умножение матрицы на число
-            assert isinstance(other, (float, int))
-            n = self.rows
-            m = self.cols
-            A = zeroes(n, m)
-            for i in range(n):
-                for j in range(m):
-                    A[i][j] = self.matrix[i][j] * other
-            return A
+        # умножение матрицы на число
+        assert isinstance(other, (float, int))
+        n = self.rows
+        m = self.cols
+        A = zeroes(n, m)
+        for i in range(n):
+            for j in range(m):
+                A[i][j] = self.matrix[i][j] * other
+        return A
 
     def __str__(self):
         return str(mt.format(self.matrix))
@@ -53,9 +52,7 @@ class Matrix(object):
 
     def __eq__(self, other):
         # знак равенства
-        if not isinstance(other, Matrix):
-            return False
-        return self.matrix == other.matrix
+        return self.matrix == other.matrix if isinstance(other, Matrix) else False
 
     def copy(self):
         # Создание копии объекта
@@ -87,7 +84,7 @@ def ident_matrix(n: int) -> Matrix:
 
 def zeroes(n: int, m: int) -> Matrix:
     # нулевая матрица n*m
-    return Matrix([([0.] * m).copy() for i in range(n)])
+    return Matrix([([0.] * m).copy() for _ in range(n)])
 
 
 def norm2(A: Matrix) -> float:

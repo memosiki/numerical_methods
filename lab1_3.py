@@ -4,7 +4,7 @@ import matrix_transformations as mt
 
 n = int(input())
 eps = float(input())  # точность
-A = [[float(elem) for elem in input().split(' ')] for i in range(n)]
+A = [[float(elem) for elem in input().split(' ')] for _ in range(n)]
 b = [[float(elem) for elem in input().split(' ')]]
 # если на диагонали стоят нулевые элементы следует поменять эту строку с другой
 b = mt.transpose(b)  # столбец из строки
@@ -32,7 +32,7 @@ def seidel(A, b, eps):
         x_prev = mt.copy(x)
         for i in range(n):
             summ = beta[i][0]
-            for j in range(0, i):
+            for j in range(i):
                 summ += alpha[i][j] * x[j][0]
             for j in range(i, n):
                 summ += alpha[i][j] * x_prev[j][0]
@@ -42,7 +42,7 @@ def seidel(A, b, eps):
         if norm / (1 - norm) * mt.norm2(mt.subtract(x, x_prev)) < eps:
             break
 
-    print("Метод Зейделя выполнялся {} итераций".format(iter))
+    print(f"Метод Зейделя выполнялся {iter} итераций")
     return x
 
 
@@ -75,7 +75,7 @@ def simple_iter(A, b, eps):
         if norm / (1 - norm) * mt.norm2(mt.subtract(x, x_prev)) < eps:
             break
 
-    print("Метод простых итераций выполнялся {} итераций".format(iter))
+    print(f"Метод простых итераций выполнялся {iter} итераций")
     return x
 
 

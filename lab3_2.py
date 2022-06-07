@@ -74,8 +74,10 @@ def calc_spline(spline, x, val):
 
 spline = cubic_spline(x, f)
 spline_print(spline, x)
-print("Значение в точке {} согласно простроенному сплайну: {}". \
-      format(x_0, calc_spline(spline, x, x_0)))
+print(
+    f"Значение в точке {x_0} согласно простроенному сплайну: {calc_spline(spline, x, x_0)}"
+)
+
 
 y = [calc_spline(spline, x, val) for val in x]
 

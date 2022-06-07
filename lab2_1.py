@@ -41,7 +41,7 @@ def simple_iter(x0):
     return x, iter_count
 
 
-print("Корень на отрезке ({} ; {})".format(a, b))
+print(f"Корень на отрезке ({a} ; {b})")
 print()
 x, iter_count = newton(a)
 print("Метод Ньютона", x)

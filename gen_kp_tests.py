@@ -23,7 +23,7 @@ def main():
     print(-1, -1, 0.)
 
     # свободный столбец
-    for i in range(n):
+    for _ in range(n):
         val = random.uniform(min_elem, max_elem)
         print(val)
 
